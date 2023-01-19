@@ -9,17 +9,15 @@
         rel="stylesheet" 
         integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" 
         crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="./assets/style.css"/>
 </head>
 
-<nav class="navbar bg-body-tertiary d-block">
+<nav class="navbar bg-body-tertiary">
     <div class="container-fluid">
-        <a class="btn btn-link" href="" role="button">High Scores</a>        
         <span id="time">Time: 0</span>
     </div>
 </nav>
 
-<div id="homepage" class="d-block container-fluid">
+<div id="homepage" class="d-block container-fluid d-block">
     <h2 class="text-center">
         Coding Quiz Challenge
     </h2>
@@ -40,24 +38,41 @@
         title
     </h1>
     <ul class="text-center list-group">
-        <li>
-            <button id="choice-0" type="button" class="btn btn-primary">strings</button>
+        <li >
+            <button id="choice-0" type="button" class="btn btn-primary">info</button>
         </li>
         <li>
-            <button id="choice-1" type="button" class="btn btn-primary">booleans</button>
+            <button id="choice-1" type="button" class="btn btn-primary">info</button>
         </li>
         <li>
-            <button id="choice-2" type="button" class="btn btn-primary">alerts</button>
+            <button id="choice-2" type="button" class="btn btn-primary">info</button>
         </li>
         <li>
-            <button id="choice-3" type="button" class="btn btn-primary">numbers</button>
+            <button id="choice-3" type="button" class="btn btn-primary">info</button>
         </li>
     </ul>
-    <p id="result" class="text-center d-none">
-        Correct!
-    </p>
+    <p id="result" class="text-center"></p>
 </div>
 
+<div id="score-input-page" class="container-fluid d-flex justify-content-center d-none">
+    <form>
+        <div class="form-group text-center">
+            <label for="Input-Initials">Enter Initials</label>
+            <input type="name" class="form-control" id="initials" placeholder="Initials">
+        </div>
+    </form>
+        <button id="score-button" class="btn btn-primary">Submit</button>
+</div>
+
+
+<div id="high-score-page" class="conatiner-fluid d-flex justify-content-center d-none">
+    <h2>
+        High Scores
+    </h2>
+    <ul id="scores-list">
+
+    </ul>
+</div>
 
 <script 
     src="https://code.jquery.com/jquery-3.6.3.min.js" 

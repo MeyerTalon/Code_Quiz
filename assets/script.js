@@ -35,6 +35,12 @@ var questions = [
   }
 ];
 
+var userNames = [];
+var userScores = [];
+userScores = localStorage.getItem('userNames')
+userScores = localStorage.getItem('userScores')
+
+
 var startEl = document.querySelector("#start");
 startEl.addEventListener("click", beginGame);
 
@@ -45,35 +51,67 @@ var choice2Btn = document.querySelector('#choice-2');
 var choice3Btn = document.querySelector('#choice-3');
 var resultEl = document.querySelector('#result');
 
-var time = 0;
-var timeEl = $("#time");
+var timeEl = document.querySelector("#time");
 var endGame = false;
 var score = 0;
 
-function beginGame() {
-  time = 75;
+var incorrectAnsCounter = 0;
+
+function beginGame(event) {
+  event.preventDefault();
+
+  var time = 75;
+  $('#time').text('Time: ' + time);
+  changeScreen();
+
+  choice0Btn.addEventListener('click', checkAnswer);
+  choice1Btn.addEventListener('click', checkAnswer);
+  choice2Btn.addEventListener('click', checkAnswer);
+  choice3Btn.addEventListener('click', checkAnswer);
+
   var timerInterval = setInterval(function() {
-    timeEl.text('Time: ' + time);
+    $('#time').text('Time: ' + time);
     time--;
+    if (incorrectAnsCounter === 1) {
+      time -= 10;
+      incorrectAnsCounter = 0;
+    }
     if (endGame || (time === 0)) {
       score = time;
-      clearInterval();
+      clearInterval(timerInterval);
     }
-
+    return;
   }, 1000);
+  return;
+}
+
+var initialsInput = document.querySelector('#initials');
+function inputScores() {
+  var userName = initialsInput.textContent;
+  var userScore = score;
+  userName = localStorage.getItem("userName");
+  userScore = localStorage.getItem("userScore");
+  // userNames.push(userName);
+  // userScores.push(score);
+  $('#score-input-page').removeClass('d-block');
+  $('#score-input-page').addClass('d-none');
+  $('#high-score-page').removeClass('d-block');
+  $('#high-score-page').addClass('d-none');
+  $('#scores-list').append('<li>' + userName + ': ' + userScore + '</li>');
 }
 
 var index = 0;
 function checkAnswer(event) {
-  input = event.target.text;
+  var clickedBtn = event.target;
+  input = clickedBtn.textContent;
+  console.log(input);
   if (input === questions[index].answer) {
     $("#result").text("Correct!");
-    index++;
   } else {
     $("#result").text("Wrong :(")
-    time -= 10;
-    index++;
+    incorrectAnsCounter++;
   }
+  index++;
   if (index === 4) {
     endGame = true;
     index = 0;
@@ -82,23 +120,54 @@ function checkAnswer(event) {
   return;
 }
 
-choice0Btn.addEventListener('click', checkAnswer);
-choice1Btn.addEventListener('click', checkAnswer);
-choice2Btn.addEventListener('click', checkAnswer);
-choice3Btn.addEventListener('click', checkAnswer);
-
 var count = 0;
 function changeScreen() {
   if (count === 0) {
-    $('#homepage').removeClass("d-block");
     $('#homepage').addClass("d-none");
     $('#question-page').removeClass('d-none');
     $('#question-page').addClass('d-block');
   }
-  titleEl.textContent = questions[0].title;
-  choice0Btn.textContent = questions[count].choices[0];
-  choice1Btn.textContent = questions[count].choices[1];
-  choice2Btn.textContent = questions[count].choices[2];
-  choice3Btn.textContent = questions[count].choices[3];
-  increment++;
+  if (count === 0) {
+    $('#title').text(questions[0].title);
+    $('#choice-0').text(questions[0].choices[0]);
+    $('#choice-1').text(questions[0].choices[1]);
+    $('#choice-2').text(questions[0].choices[2]);
+    $('#choice-3').text(questions[0].choices[3]);
+  }
+  if (count === 1) {
+    $('#title').text(questions[1].title);
+    $('#choice-0').text(questions[1].choices[0]);
+    $('#choice-1').text(questions[1].choices[1]);
+    $('#choice-2').text(questions[1].choices[2]);
+    $('#choice-3').text(questions[1].choices[3]);
+  }
+  if (count === 2) {
+    $('#title').text(questions[2].title);
+    $('#choice-0').text(questions[2].choices[0]);
+    $('#choice-1').text(questions[2].choices[1]);
+    $('#choice-2').text(questions[2].choices[2]);
+    $('#choice-3').text(questions[2].choices[3]);
+  }
+  if (count === 3) {
+    $('#title').text(questions[3].title);
+    $('#choice-0').text(questions[3].choices[0]);
+    $('#choice-1').text(questions[3].choices[1]);
+    $('#choice-2').text(questions[3].choices[2]);
+    $('#choice-3').text(questions[3].choices[3]);
+  }
+
+  count++;
+  if (count === 4) {
+    count = 0;
+  }
+
+  if (endGame) {
+    $('#question-page').removeClass('d-block');
+    $('#question-page').addClass('d-none');
+    $('#score-input-page').removeClass('d-none');
+    $('#score-input-page').addClass('d-block');
+  }
+  
+  var scoreSubmitBtn = document.querySelector('#score-button');
+  scoreSubmitBtn.addEventListener('click', inputScores);
 }
