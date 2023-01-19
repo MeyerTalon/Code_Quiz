@@ -7,3 +7,4 @@ This code quiz was made to practice using Web-API and can be used to brush up on
 ![Quiz](./WebpageScreenshot.png)
 
 ## Link
+https://meyertalon.github.io/Code_Quiz/
